@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="container">
+
+
+  </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+  <script>
+    let questions = [
+      {
+        id: 0,
+        question: 'How much does the human brain weigh',
+        choices: ['2', '3', '8', '20'],
+        correct: '8'
+      },
+      {
+        id: 1,
+        question: 'How small animal is illegal to own in Switzerland',
+        choices: ['Mouse', 'Guinea Pig', 'Dog', 'Goldfish', 'Lizard'],
+        correct: 'Guinea Pig'
+      },
+      {
+        id: 2,
+        question: 'The oldest ___ jokes was discovered on a 3,500 year old Babylon stone',
+        choices: ['Knock Knock', 'Dad', 'Your Mom', 'Poop', 'Sports'],
+        correct: 'Your Mom'
+      },
+      {
+        id: 3,
+        question: 'What Holiday is on my October 3rd',
+        choices: ['National Pizza Day', 'My birthday', 'Labor Day', 'Halloween'],
+        correct: 'My birthday'
+      },
+      {
+        id: 4,
+        question: 'What color is grass',
+        choices: ['brown', 'grey', 'blue', 'green'],
+        correct: ''
+      }
+
+    ]
+
+    questions(forEach(questions => {
+      $('.container').append(`
+      <div class="row">
+        <h5 class="question">${questions.question}</h5>
+          <p>
+            <label>
+              <input name="question-${question.id}" type="radio" checked />
+              <span>${question.choices[0]}</span>
+            </label>
+          </p>
+          <p>
+            <label>
+              <input name="question-${question.id}" type="radio" checked />
+              <span>${question.choices[1]}</span>
+            </label>
+          </p>
+          <p>
+            <label>
+              <input name="question-${question.id}" type="radio" checked />
+              <span>${question.choices[2]}</span>
+            </label>
+          </p>
+          <p>
+            <label>
+              <input name="question-${question.id}" type="radio" checked />
+              <span>${question.choices[3]}</span>
+            </label>
+          </p>
+          <p>
+            <label>
+              <input name="question-${question.id}" type="radio" checked />
+              <span>${question.choices[4]}</span>
+            </label>
+          </p>
+          <p class="answer">${question.correct}</p>
+      `)
+    }))
+
+  </script>
+
+</body>
+
+</html>
