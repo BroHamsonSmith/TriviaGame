@@ -6,91 +6,120 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+
 </head>
 
 <body>
   <div class="container">
-
-
   </div>
-  </div>
+  <a class="waves-effect waves-light btn-large finishQuiz">Finish</a>>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
 
 
   <script>
     let questions = [
       {
         id: 0,
-        question: 'How much does the human brain weigh',
-        choices: ['2', '3', '8', '20'],
-        correct: '8'
+        question: 'What is the capitol of Kentucky',
+        choices: ['Frankfort', 'Louisville', 'Padacuh', 'Bowling Green', 'Lexington'],
+        correct: 'Frankfort'
       },
       {
         id: 1,
-        question: 'How small animal is illegal to own in Switzerland',
-        choices: ['Mouse', 'Guinea Pig', 'Dog', 'Goldfish', 'Lizard'],
-        correct: 'Guinea Pig'
+        question: 'How much saliva does the human mouth produce per day',
+        choices: ['15 Ounces', '4 Ounces', '1 liter', '12 Ounces', '8 Ounces'],
+        correct: '1 liter'
       },
       {
         id: 2,
-        question: 'The oldest ___ jokes was discovered on a 3,500 year old Babylon stone',
-        choices: ['Knock Knock', 'Dad', 'Your Mom', 'Poop', 'Sports'],
-        correct: 'Your Mom'
+        question: 'What is the only food that will never spoil',
+        choices: ['Wheat', 'Ginger', 'Pickles', 'Honey', 'Corn'],
+        correct: 'Honey'
       },
       {
         id: 3,
-        question: 'What Holiday is on my October 3rd',
-        choices: ['National Pizza Day', 'My birthday', 'Labor Day', 'Halloween'],
-        correct: 'My birthday'
+        question: 'What was the first toy to be advertised on TV',
+        choices: ['Slinky', 'Mr. Potato Head', 'Legos', 'GI Joe', 'Barbies'],
+        correct: 'Mr. Potato Head'
       },
       {
         id: 4,
-        question: 'What color is grass',
-        choices: ['brown', 'grey', 'blue', 'green'],
-        correct: ''
+        question: 'What is the medical term for your butt crack',
+        choices: ['inner gluteous', 'intergluteal cleft', 'minius gluteous', 'adductor brevis', 'tensor fasciae latae'],
+        correct: 'intergluteal cleft'
       }
-
     ]
 
-    questions(forEach(questions => {
+    questions.forEach(question => {
       $('.container').append(`
       <div class="row">
-        <h5 class="question">${questions.question}</h5>
+        <h5 class="question">${question.question}</h5>
           <p>
             <label>
-              <input name="question-${question.id}" type="radio" checked />
+              <input class="choice" data-choice="${question.choices[0]} name="question-${question.id}" type="radio" checked />
               <span>${question.choices[0]}</span>
             </label>
           </p>
           <p>
             <label>
-              <input name="question-${question.id}" type="radio" checked />
+              <input class="choice" data-choice="${question.choices[1]} name="question-${question.id}" type="radio" checked />
               <span>${question.choices[1]}</span>
             </label>
           </p>
           <p>
             <label>
-              <input name="question-${question.id}" type="radio" checked />
+              <input class="choice" data-choice="${question.choices[2]} name="question-${question.id}" type="radio" checked />
               <span>${question.choices[2]}</span>
-            </label>
+             </label>
           </p>
           <p>
             <label>
-              <input name="question-${question.id}" type="radio" checked />
+              <input class="choice" data-choice="${question.choices[3]} name="question-${question.id}" type="radio" checked />
               <span>${question.choices[3]}</span>
+             </label>
+           </p>
+           <p>
+             <label>
+               <input class="choice" data-choice="${question.choices[4]} name="question-${question.id}" type="radio" checked />
+               <span>${question.choices[4]}</span>
             </label>
           </p>
-          <p>
-            <label>
-              <input name="question-${question.id}" type="radio" checked />
-              <span>${question.choices[4]}</span>
-            </label>
-          </p>
-          <p class="answer">${question.correct}</p>
+          <p class="answer-${question.id}" style="visibility: hidden">${question.correct}</p>
+        </div>      
       `)
-    }))
+    })
+    
+    var qChoice0
+    var qChoice1
+    var qChoice2
+    var qChoice3
+    var qChoice4
+
+    $(document).on('click', '.choice', function () {
+      console.log($(this).attr('name'))
+      console.log($(this).attr('data-choice'))
+      let temp = $(this).attr('name').split('-')
+      let qId = temp[1]
+      window[`qChoices${qId}`] = $(this).attr('data-choice')
+    })
+
+    $('.finishQuiz').on('click', function () {
+      count = 0
+      for (let i = 0; i < questions.length; i++) {
+        $(`answer-${i}`).css('visibility', 'visible')
+      if (window[`qChoices${i}`] === questions[i].correct) {
+        count++  
+        }
+      }
+      if (count === 5) {
+        alert('Perfect Score!')
+      } else {
+        alert('Close, Try Again!')
+      }
+    })
 
   </script>
 
