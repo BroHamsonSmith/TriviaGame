@@ -11,6 +11,8 @@
 </head>
 
 <body>
+  <h2>World's Toughest 5 Question Quiz</h2>
+  <h4>Time Left: <span class="time"></span></h4>
   <div class="container">
   </div>
   <a class="waves-effect waves-light btn-large finishQuiz">Finish</a>>
@@ -59,31 +61,31 @@
         <h5 class="question">${question.question}</h5>
           <p>
             <label>
-              <input class="choice" data-choice="${question.choices[0]} name="question-${question.id}" type="radio" checked />
+              <input class="choice" data-choice="${question.choices[0]}" name="question-${question.id}" type="radio" checked />
               <span>${question.choices[0]}</span>
             </label>
           </p>
           <p>
             <label>
-              <input class="choice" data-choice="${question.choices[1]} name="question-${question.id}" type="radio" checked />
+              <input class="choice" data-choice="${question.choices[1]}" name="question-${question.id}" type="radio" checked />
               <span>${question.choices[1]}</span>
             </label>
           </p>
           <p>
             <label>
-              <input class="choice" data-choice="${question.choices[2]} name="question-${question.id}" type="radio" checked />
+              <input class="choice" data-choice="${question.choices[2]}" name="question-${question.id}" type="radio" checked />
               <span>${question.choices[2]}</span>
              </label>
           </p>
           <p>
             <label>
-              <input class="choice" data-choice="${question.choices[3]} name="question-${question.id}" type="radio" checked />
+              <input class="choice" data-choice="${question.choices[3]}" name="question-${question.id}" type="radio" checked />
               <span>${question.choices[3]}</span>
              </label>
            </p>
            <p>
              <label>
-               <input class="choice" data-choice="${question.choices[4]} name="question-${question.id}" type="radio" checked />
+               <input class="choice" data-choice="${question.choices[4]}" name="question-${question.id}" type="radio" checked />
                <span>${question.choices[4]}</span>
             </label>
           </p>
@@ -91,7 +93,7 @@
         </div>      
       `)
     })
-    
+
     var qChoice0
     var qChoice1
     var qChoice2
@@ -99,19 +101,24 @@
     var qChoice4
 
     $(document).on('click', '.choice', function () {
-      console.log($(this).attr('name'))
-      console.log($(this).attr('data-choice'))
+      // console.log($(this).attr('name'))
+      // console.log($(this).attr('data-choice'))
       let temp = $(this).attr('name').split('-')
       let qId = temp[1]
-      window[`qChoices${qId}`] = $(this).attr('data-choice')
+      window[`qChoice${qId}`] = $(this).attr('data-choice')
     })
 
     $('.finishQuiz').on('click', function () {
+      finishGame()
+    })
+
+    function finishGame() {
+      clearInterval(gameTimer)
       count = 0
       for (let i = 0; i < questions.length; i++) {
-        $(`answer-${i}`).css('visibility', 'visible')
-      if (window[`qChoices${i}`] === questions[i].correct) {
-        count++  
+        $(`.answer-${i}`).css('visibility', 'visible')
+        if (window[`qChoice${i}`] === questions[i].correct) {
+          count++
         }
       }
       if (count === 5) {
@@ -119,7 +126,40 @@
       } else {
         alert('Close, Try Again!')
       }
-    })
+    }
+
+    function timeConversion(t) {
+      //  Takes the current time in seconds and convert it to minutes and seconds (mm:ss).
+      var minutes = Math.floor(t / 60)
+      var seconds = t - (minutes * 60)
+
+      if (seconds < 10) {
+        seconds = '0' + seconds
+      }
+
+      if (minutes === 0) {
+        minutes = '00'
+      } else if (minutes < 10) {
+        minutes = '0' + minutes
+      }
+
+      return minutes + ':' + seconds
+    }
+
+    //this function sets timer of 1 minute to complete the 5 question quiz
+    let time = 120
+    $('.time').html('1:00')
+
+    let gameTimer = setInterval(function () {
+      time--
+      if (time > 0) {
+        $('.time').html(timeConversion(time))
+      }
+      else {
+        $('.time').html('0:00')
+        finishGame()
+      }
+    }, 1000)
 
   </script>
 
